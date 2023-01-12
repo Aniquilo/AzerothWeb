@@ -1,0 +1,19 @@
+Require all granted
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    #Uncomment the line below if your website in on the root of your webserver
+    #RewriteBase /
+
+    #Frontend rewrite
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.+)$ index.php [QSA,L]
+
+    #Forums specific
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^forums/(.*)$ index.php/$1 [QSA,L]
+
+    #Restrict vendor
+    RewriteRule ^vendor/?$ - [F,L]
+</IfModule>

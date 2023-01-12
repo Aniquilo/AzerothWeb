@@ -1,0 +1,192 @@
+/* Promotion Codes */
+
+.promotion_codes {
+	width:100%; height:auto; min-height:260px;
+	background:url("images/misc/pcode_bg.png") no-repeat top;
+	}
+	
+	.pcode-top-cont {
+		height: 260px;
+	}
+	
+	.promotion_codes form {
+		display:block;
+		width: 348px; height:auto;
+		float:right;
+		margin:99px 90px 0 0;
+		}
+		
+		.promotion_codes form p {
+            display: block;
+            width: 100%;
+            text-shadow: 0 1px 1px rgba(6, 9, 18, 0.3), 0 0 3px rgba(0, 0, 0, 0.25);
+            color: #405268;
+            font-family: Cambria,Georgia,serif;
+            font-size: 12px;
+            font-weight: 400;
+            font-style: italic;
+            text-align:center;
+            margin:18px 0 0 0;
+            }
+		
+		.promotion_codes form h1 {
+			display:block;
+			height:30px;
+            font-family: Constantia, serif;
+            font-size: 13px;
+            font-weight: 400;
+            text-transform: uppercase;
+            text-align: center;
+            position:absolute;
+            top: -34px;
+            left: 0px;
+            right: 0px;
+			}
+			.promotion_codes form h1#enter {
+                text-shadow: 0 0 9px rgba(50,87,34, 0.35);
+                color:#508937;
+            }
+			.promotion_codes form h1#invalid {
+                text-shadow: 0 0 9px rgba(255, 69, 69, 0.35);
+                color: #e75448;
+            }
+	
+	.promotion_codes form input[type="text"] {
+        width: 348px;
+        height: 59px;
+        box-shadow: 0 0 35px rgba(11, 19, 30, 0.19), inset 0 0 16px rgba(0, 0, 0, 0.11);
+        border: 1px solid #365677;
+        background-color: #0b1521;
+        color: #caebf6;
+        text-shadow: 0 0 6px rgba(41, 104, 173, 0.3);
+        font-family: Cambria,Georgia,serif;
+        font-size: 23px;
+        font-weight: 700;
+        text-transform: uppercase;
+		text-align:center;
+        transition: none !important; -moz-transition: none !important; -webkit-transition:  none !important; -o-transition: none !important;
+        padding:0 13px;
+        box-sizing: border-box;
+		}
+		
+		.promotion_codes form input[type="text"]:focus {
+			text-align:left;
+            }
+        .promotion_codes form input[type="text"]::placeholder {
+            color: rgba(202,235,246,.05);
+            text-shadow: 0 0 6px rgba(41, 104, 173, 0.02);
+            }
+			
+	/* Reward Container */
+	
+	.reward_container {
+        width:auto; height:87px;
+        min-width: 276px;
+		float:right;
+        box-shadow: 0 0 24px rgba(9, 15, 24, 0.57);
+        border: 1px solid #1d2c3c;
+        background-color: #223a51;
+		border-radius:1px;
+		margin:86px 16px 0 0;
+		}
+		.reward_container div.arrow {
+            display: block;
+			width: 0; 
+            height: 0; 
+            border-top: 14px solid transparent;
+            border-bottom: 14px solid transparent;
+            border-left: 14px solid #223a51;
+            position: absolute;
+            right:-14px;
+            top:30px;
+            }
+		
+	/* COINS REWARD */
+	.reward_container .coins_reward {
+		font-family: Cambria,Georgia,serif;
+		text-shadow:0 0 5px rgba(0,0,0,.1), 0 2px 2px rgba(0,0,0,.2), 0 1px 0 rgba(0,0,0,.1);
+		text-align:center;
+        margin:20px 0 0 0;
+        padding: 0 30px;
+		}
+		.reward_container .coins_reward h1 {
+			color:#879db9;
+			font-size:14px;
+			text-transform:uppercase;
+			}
+		.reward_container .coins_reward h2 {
+			color:#857d73;
+			font-size:28px;
+			text-transform:uppercase;
+			margin:-4px 0 0 0;
+			}
+			.reward_container .coins_reward h2 {color:#c7c7c7;}
+			.reward_container .coins_reward.gold h2 {color:#c0931b;}
+			
+    .reward_loading {
+        padding: 26px 0 0 0;
+        }
+        .reward_loading p {
+            font-family: Cambria,Georgia,serif;
+            font-size:28px;
+			text-transform:uppercase;
+            color:#879db9;
+            text-align: center;
+        }
+	
+	.pcode-chat-select-cont {
+        padding: 0px 0 60px 0;
+        text-align: center;
+	}
+	
+	/* Coins Reward */
+	
+	.item_reward {
+		font-family: Cambria,Georgia,serif;
+        text-shadow:0 0 5px rgba(0,0,0,.1), 0 2px 2px rgba(0,0,0,.2), 0 1px 0 rgba(0,0,0,.1);
+        margin: 16px 0 0 0;
+		}
+		.item_reward h1 {
+			color:#879db9;
+			font-size:14px;
+            text-transform:uppercase;
+            text-align: center;
+			}
+		
+		.item_reward .item_ {
+            display: block;
+            width:auto;
+            height:30px;
+			text-align:left;
+			padding:6px 30px;
+			margin:0 auto;
+			}
+			
+			.item_reward .item_ .ico {
+				width:28px; height:28px;
+				border-radius:1px;
+                background-size:100%;
+                border: 1px solid;
+				box-shadow: inset 0 0 5px rgba(0,0,0,1), 0 0 3px rgba(0,0,0,.5);
+				float: left;
+				}
+			.item_reward .item_ #item_info {
+                float:left;
+                }
+			.item_reward .item_ h2 {
+				font-size:22px;
+				color:#cacaca;
+				text-transform:uppercase;
+				margin:-6px 0 0 6px;
+				}
+			.item_reward .item_ h3 {
+				color:#cacaca;
+				font-size:14px;
+				margin:-5px 0 0 6px;
+				}	
+			
+				
+				
+
+
+

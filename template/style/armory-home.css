@@ -1,0 +1,188 @@
+
+.armory {
+    padding: 80px 0 80px 0;
+    min-height: auto;
+    background-image: url("images/misc/armory_large_bg.png");
+    background-repeat: no-repeat;
+    }
+    .armory .search {
+        padding: 92px;
+        box-sizing: border-box;
+        text-align: center;
+        transition: all 500ms;
+        background-image: url("images/misc/armory_small_bg.png");
+        background-repeat: no-repeat;
+        }
+        .armory .search.animate {
+            padding: 28px;
+            }
+        .armory .search input[type="text"] {
+            width: 70%;
+            height: 55px;
+            }
+        .armory .search input[type="submit"] {
+            vertical-align: top;
+            margin: 1px 0 0px 10px;
+            }
+
+.results {
+    margin: 48px auto 0 auto !important;
+    padding: 28px;
+    box-sizing: border-box;
+    }
+    .results #search_sections {
+        margin-bottom: 38px;
+        padding: 0 0 28px 0;
+        border-bottom: 2px solid #21354c;
+        }
+        .results #search_sections h1 {
+            float: left;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.55);
+            color: #d7e6fa;
+            font-family: Cambria,Georgia,serif;
+            font-size: 24px;
+            line-height: 24px;
+            font-weight: 400;
+            margin: 6px 0 0 12px;
+            }
+        .results #search_realms {
+            float: right;
+            }
+            .results #search_realms a:last-child {
+                margin-right: 0;
+                }
+            .results #search_realms > span {
+                color: #6f838d;
+                font-family: Cambria,Georgia,serif;
+                font-size: 16px;
+                font-weight: 400;
+                display: inline-block;
+                vertical-align: top;
+                margin: 10px 14px 0 0;
+                }
+    .results .search_tab {
+        padding: 0 18px;
+        }
+    .results .noresults {
+        text-align: center;
+        padding: 22px 30px 30px 30px;
+        font-size: 22px;
+    }
+
+/* buttons */
+.armory_button {
+    display:inline-block;
+    width:auto; height: 40px;
+    padding:9px 22px 0 22px;
+    box-sizing: border-box;
+    border-radius:1px;
+    background-color: rgba(31,53,79,0.85);
+    color: #a9c1d6;
+    font-family: Cambria,Georgia,serif;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 400;
+    text-transform: none;
+    text-shadow: none;
+    transition: all 400ms;
+    margin: 0 0 0 10px;
+    }
+    .armory_button:first-of-type {
+        margin: 0;
+        }
+    .armory_button:hover {
+        background-color:#344f6d;
+        color:#c8e0f5;
+        }
+        .armory_button:active {
+        box-shadow: inset 0 0 8px rgba(0,0,0,.55);
+        }
+    .armory_button::after {
+        content: "";
+        display: block;
+        position: absolute;
+        pointer-events: none;
+        top:0px;
+        left:0px;
+        right:0px;
+        bottom:0px;
+        box-shadow: 0 0 10px rgba(62, 153, 255, 0.2);
+        border: 1px solid rgba(55, 142, 236, 0.75);
+        opacity: 0;
+        transition: opacity 300ms;
+        }
+        .armory_button.active::after { opacity: 1; }
+
+/* Character results */
+.search_result_character {
+    text-align: left;
+    width: 248px !important;
+    display: inline-block;
+    margin-bottom: 18px;
+    }
+    .search_result_character #character_avatar {
+        display: inline-block;
+        width: 64px;
+        height: 64px;
+        border: 1px solid #78a3c8;
+        box-shadow: 0 0 10px rgba(5,10,17,0.5);
+        border-radius: 1px;
+        }
+        .search_result_character #character_avatar:hover {
+            border: 1px solid #c4e3ff !important;
+            box-shadow: 0 0 13px rgba(120,163,200,0.4), 0 0 10px rgba(5,10,17,0.5);
+            }
+        .search_result_character #character_avatar img {
+            width: 62px;
+            height: 62px;
+            margin: 1px;
+            }
+        .search_result_character #character_avatar #inset_shadow {
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            width: 62px;
+            height: 62px;
+            box-shadow: inset 0 0 10px rgba(9,16,28,0.7), inset 0 0 3px rgba(9,16,28,0.7);
+            }
+    .search_result_character #character_texts {
+        vertical-align: top;
+        display: inline-block;
+        margin-left: 14px;
+        font-size: 14px;
+        font-weight: normal;
+        }
+        .search_result_character #character_texts .name {
+            display: inline-block;
+            font-size: 18px;
+            padding-top: 2px;
+            padding-bottom: 4px;
+            font-weight: bold;
+            }
+        .search_result_character #character_texts .info {
+            line-height: 19px;
+            margin-top: -1px;
+            height: auto;
+            display: block;
+            }
+
+/* Guild Results */
+.search_result_guild {
+    padding: 13px 15px !important;
+    }
+    .search_result_guild > div:nth-child(1) {
+    width: 32%;
+    }
+    .search_result_guild > div:nth-child(2) {
+    width: 22%;
+    }
+    .search_result_guild > div:nth-child(3) {
+    width: 28%;
+    }
+    .search_result_guild > div:nth-child(4) {
+    width: 16%;
+    }
+    .search_result_guild a {
+        margin-top: 2px;
+        font-weight: bold;
+        }

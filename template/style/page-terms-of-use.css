@@ -1,0 +1,117 @@
+/* TERMS */
+
+	.terms-of-usage {
+		padding: 0 0 10px 0;
+		}
+		
+		.terms-of-usage h1 {
+			color: #bfd9e5;
+			font-family: Cambria,Georgia,serif;
+            font-size: 22px;
+            font-weight: 400;
+            text-align:left;
+            text-transform: uppercase;
+			margin:0 0 10px 12px;
+			padding:10px 0 0 0;
+			}
+			
+		#terms-container { 
+            width: 820px;
+            margin: 0 auto;
+			clear: both;
+			background:rgba(0,0,0,.4);
+			border-radius:1px;
+			box-shadow:inset 0 0 8px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.05);
+			overflow:hidden;
+			}
+			#terms-container .viewport {
+				width: 806px; 
+				height: 700px;
+				overflow: hidden;
+				position: relative;
+				float:left;
+				
+				}
+				#terms-container .overview { 
+                    position: absolute; left: 0; top: 0;
+                    text-align:left;
+                    padding:0px 20px 20px 20px;
+                    color:#6c6c6c;
+                    }
+
+                    #terms-container .overview h3:first-child {
+                        margin-top: 16px;
+                    }
+		
+		.terms-shadow {
+			width:808px; height:34px;
+			background:url("images/misc/terms-shadow.png") repeat-x;
+			position:absolute;
+			bottom:0px; left:0;
+			z-index:1;
+			}
+			
+		#terms-container .scrollbar {
+			position: relative; 
+			float:right; width:10px;
+			left:-2px;
+            z-index:2;
+            margin: 3px 0 0 0;
+			}
+			#terms-container .track {
+				background-color: #121e2e;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                height: 100%;
+                width: 8px;
+				position:relative;
+				padding:0;
+				}
+			#terms-container .thumb {
+				cursor:pointer;
+				width: 8px;
+                background-color: rgba(70,108,153,.3);
+                }
+                #terms-container .scrollbar:hover .thumb {
+                    background-color: rgba(70,108,153,.4);
+                    }
+			
+			#terms-container .disable{ display: none; }
+			
+			
+		.terms-of-usage input.agree {
+			background:rgba(0,255,0,.05);
+			box-shadow:inset 0 0 0 1px rgba(255,255,255,.03), 0 0 5px rgba(0,0,0,.6);
+			color: #a4b3c4;
+			text-shadow: 0 2px 1px rgba(0,0,0,.4);
+			margin:0 0 0 10px;
+			}
+			.terms-of-usage input.agree:hover {
+                background:rgba(0,255,0,.08);
+                box-shadow:inset 0 0 0 1px rgba(255,255,255,.03), 0 0 5px rgba(0,0,0,.6);
+            }
+			
+			.terms-of-usage a.dissagree {
+                display:inline-block;
+                vertical-align: top;
+				background:rgba(255,255,153,.03);
+				box-shadow:inset 0 0 0 1px rgba(255,255,255,.02), 0 0 5px rgba(0,0,0,.5);
+				margin:0px 0 0 6px;
+				text-shadow:1px 1px 0 rgba(255,255,255,.02);
+				}
+				.terms-of-usage a.dissagree:hover {background:rgba(255,255,153,.05);}
+				
+				#terms-container .overview {}
+                    #terms-container .overview h3, 
+                    .terms-of-use h3 { 
+                        text-shadow: 0 0 3px rgba(174, 232, 255, 0.1);
+                        color:#caebf6;
+                        margin:20px 0 5px 0;
+                    }
+                    #terms-container .overview p, 
+                    .terms-of-use p {
+                        text-shadow: 0 0 3px rgba(174, 232, 255, 0.1);
+                    }
+		
+		.terms-of-use {
+			padding-top:10px !important;
+			}

@@ -1,0 +1,85 @@
+/* ACTIVITY Pages 
+---------------------------------------------------------*/
+
+	.pagination-holder {
+        width: 840px;
+        }
+	.pagination-holder .pagination {
+		margin: 0 15px 0 0;
+		}
+	
+	.coins-activity {}
+	.store-activity {}
+	.account-activity {}
+	
+		.activity-list  { margin:0; padding:0;}
+		.activity-list li {
+			display:block; 
+			width:770px; height:56px;
+            }
+            .activity-list li::after {
+                content: "";
+                display: block;
+                position: absolute;
+                left: -4px;
+                right: -4px;
+                bottom: -2px;
+                height: 2px;
+                background-color:rgba(9,16,28,.5);
+                }
+			    .activity-list li:last-child::after { display: none; }
+		.activity-list li p {
+			display:block;
+			float:left;
+			padding:20px 0 20px 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            color: #6f838d;
+            font-family: Cambria,Georgia,serif;
+            font-size: 14px;
+            font-weight: 400;
+			}
+			.activity-list li p#r-title { 
+				width:45%; 
+				text-align:left;
+				}
+				.activity-list li p#r-title i {padding:0 5px 0 0;}
+                .activity-list li p#r-title b,
+                .activity-list li p#r-title2 b {color:#97a8bb;}
+				
+			.activity-list li p#r-date { width:25%; color:#61727a;}
+			.activity-list li p#ar-date {width:25%; color:#61727a; text-align:right;}
+			.activity-list li p#r-info { width:30%; text-align:right;}
+			/* Coin Activity */
+			.activity-list li p#r-title2 { width:35%; text-align:left; }
+			.activity-list li p#r-date2 { width:25%; color:#61727a;}
+			.activity-list li p#r-info2 { width:40%; text-align:right;}
+		
+			.activity-list li p#r-item {width:45%; text-align:left;}
+			.activity-list li p#r-item a {
+				font-size:12px;
+				font-weight: bold;
+				}
+				.activity-list li p#r-item a:hover { color:inherit;}
+		
+		/* there-is-nothing */
+		p.there-is-nothing {
+			font-size:16px;
+			font-style:italic;
+			font-weight: bold;
+			display:block;
+			padding:20px 0 20px 0;
+			color:#887d6b;
+			text-shadow:0 0 10px #000;
+			}
+		p.there-are-no-chars {
+			font-size:13px;
+			font-style:italic;
+			font-weight: bold;
+			display:block;
+			padding:34px 35px 20px 35px;
+			color:#887d6b;
+			text-shadow:0 0 10px #000;
+			}
+			p.armor-store-fix {
+				padding:9px 0 0 10px;
+			}

@@ -1,0 +1,70 @@
+/* UNSTUCK 
+	---------------------------------------------------------*/
+		
+	.unstuck {}
+		
+		.select-charcater-s, .ust-submit {
+            width: 346px; height: 111px;
+            float: left;
+            border-radius:0px;
+            }
+		.select-charcater-s {
+            margin: 34px 0 40px 26px;
+            }
+            .select-charcater-s::before {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 346px;
+                height: 111px;
+                -webkit-transform:scaleX(-1);
+                -moz-transform:scaleX(-1);
+                -ms-transform:scaleX(-1);
+                -o-transform:scaleX(-1);
+                transform:scaleX(-1);
+                background: url("images/misc/unstuck-shadow.png") no-repeat;
+                }
+		.ust-submit {
+            margin: 34px 0 40px 0;
+            background: url("images/misc/unstuck-shadow.png") no-repeat;
+			}
+			.ust-submit p {
+                float:left;
+                margin: 40px 0 0 14px;
+                text-shadow: 0 1px 1px rgba(4, 8, 13, 0.55);
+                color: #6e7b89;
+                font-family: Cambria,Georgia,serif;
+                font-size: 13px;
+                font-style: italic;
+                }
+		
+		.cooldown-ico {
+			width:87px; height:87px; 
+			float:left;
+			background:url(images/misc/hs-active.png) no-repeat;
+			margin:40px 0px 20px 0px;
+			}
+			.cooldown-ico .ust-cooldown {
+				width:87px; height:87px;
+				}
+				.cooldown-ico .ust-cooldown span {
+				display:block;
+				width:87px;
+				position:absolute;
+				left:0; bottom:0px;
+				background:url(images/misc/hs-cooldown.png) no-repeat bottom;
+				box-shadow: 0 0 6px rgba(0,0,0,.1);
+				}
+				.cooldown-ico .ust-cooldown p {
+                text-shadow: 0 1px 1px rgba(4, 8, 13, 0.55);
+                color: #6e7b89;
+                font-family: Cambria,Georgia,serif;
+                font-size: 13px;
+                font-style: italic;
+                }
+                
+        .unstuck .description-small {
+            padding: 0 0 50px 0;
+        }

@@ -1,0 +1,42 @@
+<?php
+if (!defined('init_engine'))
+{	
+	header('HTTP/1.0 404 not found');
+	exit;
+}
+
+//Define the permissions columns for more associative use
+define('PERMISSION_MAN_RBAC', '1');
+define('PERMISSION_NEWS', '2');
+define('PERMISSION_ARTICLES', '3');
+define('PERMISSION_PSTORE', '4');
+define('PERMISSION_MEDIA_VIDEOS', '5');
+define('PERMISSION_MEDIA_SREENSHOTS', '6');
+define('PERMISSION_FORUMS', '7');
+define('PERMISSION_FORUM_CATS', '8');
+define('PERMISSION_LOGS', '9');
+define('PERMISSION_PROMO_CODES', '10');
+define('PERMISSION_TICKETS', '11');
+define('PERMISSION_PREV_BUGTRACKER', '12');
+define('PERMISSION_MAN_BUGTRACKER', '13');
+define('PERMISSION_PREV_USERS', '14');
+define('PERMISSION_MAN_USERS', '15');
+define('PERMISSION_STORE', '16');
+define('PERMISSION_ACCESS_ACP', '17');
+define('PERMISSION_MAN_USER_ROLES', '18');
+define('PERMISSION_MAN_NOTICE', '19');
+
+define('PERMISSION_FORUMS_DELETE_POSTS', '20');
+define('PERMISSION_FORUMS_VIEW_DELETED_POSTS', '21');
+define('PERMISSION_FORUMS_EDIT_POSTS', '22');
+define('PERMISSION_FORUMS_POST_AS_STAFF', '23');
+define('PERMISSION_FORUMS_EDIT_TOPICS', '24');
+define('PERMISSION_FORUMS_DELETE_TOPICS', '25');
+define('PERMISSION_FORUMS_LOCK_TOPICS', '26');
+define('PERMISSION_FORUMS_UNLOCK_TOPICS', '27');
+define('PERMISSION_FORUMS_MAN_STICKY', '29');
+define('PERMISSION_FORUMS_MOVE_TOPICS', '32');
+
+define('PERMISSION_MAN_POLLS', '28');
+define('PERMISSION_ARTICLE_COMMENT_DELETE', '30');
+define('PERMISSION_MAN_USERS_CURRENCY', '31');

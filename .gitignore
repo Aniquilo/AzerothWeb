@@ -1,0 +1,8 @@
+configuration/basic.php
+configuration/authentication.php
+configuration/database.php
+configuration/server.php
+uploads/*
+cache/*
+sql/battlecry.sql
+configuration/realms.php

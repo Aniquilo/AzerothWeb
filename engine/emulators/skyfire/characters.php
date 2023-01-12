@@ -1,0 +1,869 @@
+<?php
+if (!defined('init_engine'))
+{	
+	header('HTTP/1.0 404 not found');
+	exit;
+}
+
+class skyfire_Characters implements emulator_Characters
+{
+    private $core;
+	private $realmId;
+    private $DB;
+    
+	//The debuff applied to a dead character
+	private $deathDebuffId = '8326';
+        
+    /**
+	 * Array of table names
+	 */
+	protected $tables = array(
+        "characters" => "characters",
+        "guild_member" => "guild_member",
+		"guild" => "guild",
+		"gm_tickets" => "gm_ticket",
+	//	"arena_team" => "arena_team"
+	);
+
+	/**
+	 * Array of column names
+	 */
+	protected $columns = array(
+
+		"characters" => array(
+			"guid" => "guid",
+			"account" => "account",
+			"name" => "name",
+			"race" => "race",
+			"class" => "class",
+			"gender" => "gender",
+			"level" => "level", 
+			"zone" => "zone",
+			"online" => "online",
+			"money" => "money",
+			"totalKills" => "totalKills",
+		//	"arenaPoints" => "arenaPoints",
+		//	"totalHonorPoints" => "totalHonorPoints",
+			"position_x" => "position_x",
+			"position_y" => "position_y",
+			"position_z" => "position_z",
+			"orientation" => "orientation",
+			"map" => "map",
+			"chosenTitle" => "chosenTitle"
+		),
+        
+    /*    "arena_team" => array(
+			"arenaTeamId" => "arenaTeamId",
+			"name" => "name",
+			"type" => "type",
+			"seasonGames" => "seasonGames",
+			"seasonWins" => "seasonWins",
+			"rating" => "rating",
+			"rank" => "rank"
+		),*/
+		
+		"guild" => array(
+			"guildid" => "guildid",
+			"name" => "name",
+			"leaderguid" => "leaderguid"
+		),
+
+		"guild_member" => array(
+			"guildid" => "guildid",
+			"guid" => "guid"
+        ),
+        
+		"gm_tickets" => array(
+			"ticketId" => "id",
+			"guid" => "playerGuid",
+            "message" => "description",
+			"response" => "response",
+            "name" => "name",
+			"createTime" => "createTime",
+			"completed" => "completed",
+            "escalated" => "escalated",
+            "closedBy" => "closedBy",
+            "assignedTo" => "assignedTo",
+            "comment" => "comment",
+            "viewed" => "viewed"
+		)
+    );
+    
+	//constructor
+	public function __construct($realmId)
+	{
+        $this->core =& get_instance();
+        $this->realmId = $realmId;
+        $this->DB = $this->core->realms->getRealm($realmId)->getCharactersConnection();
+
+		return true;
+	}
+	
+	public function getAccountCharacters($account = false)
+	{
+        if (!$account)
+        {
+		    $account = $this->core->user->get('id');
+        }
+
+		$res = $this->DB->prepare("SELECT `guid`, `name`, `level`, `race`, `class`, `gender` FROM `characters` WHERE `account` = :account ORDER BY `level` DESC, `name` ASC;");
+		$res->bindParam(':account', $account, PDO::PARAM_INT);
+		$res->execute();
+				
+		if ($res->rowCount() > 0)
+		{
+			return $res->fetchAll();
+        }
+        
+		return false;
+	}
+	
+	public function getcharactermaxlevel($account = false)
+	{
+        if (!$account)
+        {
+		    $account = $this->core->user->get('id');
+        }
+		$level = "80";
+
+		$res = $this->DB->prepare("SELECT `guid`, `name`, `level`, `race`, `class`, `gender` FROM `characters` WHERE `account` = :account AND `level` = :level;");
+		$res->bindParam(':account', $account, PDO::PARAM_INT);
+		$res->bindParam(':level', $level, PDO::PARAM_INT);
+		$res->execute();
+				
+		if ($res->rowCount() > 0)
+		{
+			return true;
+        }
+        
+		return false;
+	}
+	
+	public function getCharacterMaxchar()
+    {
+		$account = $this->core->user->get('id');
+		$res = $this->DB->prepare("SELECT COUNT(*) AS `total` FROM `characters` WHERE `account` = :account;");
+		$res->bindParam(':account', $account, PDO::PARAM_INT);
+		$res->execute();
+
+		if($res->rowCount() > 0)
+		{
+			$row = $res->fetch(PDO::FETCH_ASSOC);
+			
+			if(empty($row['total']))
+			{
+				return 0;	
+			} else 
+			{
+				return $row['total'];
+			}
+			
+		}
+		else
+		{
+			return 0;
+		}
+    }
+	
+	public function FindHightestLevelCharacter($acc)
+	{
+		$res = $this->DB->prepare("SELECT `guid`, `name`, `level`, `race`, `class`, `gender` FROM `characters` WHERE `account` = :account ORDER BY `level` DESC LIMIT 1;");
+		$res->bindParam(':account', $acc, PDO::PARAM_INT);
+		$res->execute();
+		
+		if ($res->rowCount() > 0)
+		{
+			$return = $res->fetch();
+		}
+		else
+		{
+			$return = false;
+		}
+		unset($res);
+		
+		return $return;
+	}
+	
+	public function isMyCharacter($guid = false, $name = false, $account = false)
+    {
+		if ($guid === false && $name === false)
+		{
+			return false;
+		}
+		
+		if (!$account)
+			$account = $this->core->user->get('id');
+		
+		$res = $this->DB->prepare("SELECT `guid`, `account` FROM `characters` WHERE ".($guid === false ? "`name` = :name" : "`guid` = :guid")." AND `account` = :account LIMIT 1;");
+		if ($guid !== false)
+		{
+			$res->bindParam(':guid', $guid, PDO::PARAM_INT);
+		}
+		else
+		{
+			$res->bindParam(':name', $name, PDO::PARAM_STR);
+		}
+		$res->bindParam(':account', $account, PDO::PARAM_INT);
+		$res->execute();
+		
+		if ($res->rowCount() == 0)
+			return false;
+		  
+      	return true;
+    }
+
+	public function getCharacterName($guid)
+    {
+		$res = $this->DB->prepare("SELECT `name` FROM `characters` WHERE `guid` = :guid LIMIT 1;");
+		$res->bindParam(':guid', $guid, PDO::PARAM_INT);
+		$res->execute();
+		
+		$row = $res->fetch(PDO::FETCH_ASSOC);
+		unset($res);
+		
+    	if (!$row)
+		{
+      	  	return false;
+		}
+		  
+        return $row['name'];
+    }
+	
+	public function getprofessioncheck($guid, $skill)
+    {
+		$res = $this->DB->prepare("SELECT * FROM `character_skills` WHERE `guid` = :guid AND `skill` = :skill LIMIT 1;");
+		$res->bindParam(':guid', $guid, PDO::PARAM_INT);
+		$res->bindParam(':skill', $skill, PDO::PARAM_INT);
+		$res->execute();
+		
+		$row = $res->fetch(PDO::FETCH_ASSOC);
+		unset($res);
+		
+    	if (!$row)
+		{
+      	  	return false;
+		}
+		  
+        return $row;
+    }
+	
+		public function getcharactershop($guid, $value, $max, $skill)
+    {
+		//update the player professions
+             $update = $this->DB->prepare("UPDATE `character_skills` SET value = :value, max = :max WHERE `guid` = :guid AND `skill` = :skill LIMIT 1;");
+             $update->bindParam(':guid', $guid, PDO::PARAM_INT);
+             $update->bindParam(':value', $value, PDO::PARAM_INT);
+			 $update->bindParam(':max', $max, PDO::PARAM_INT);
+			 $update->bindParam(':skill', $skill, PDO::PARAM_INT);
+             $update->execute();
+		
+		if ($update->rowCount() == 0)
+		{
+			return false;
+		}
+		
+			return true;
+		
+    }
+	
+	public function getCharacterData($guid = false, $name = false, $columns = 'all')
+    {
+		if ($guid === false && $name === false)
+		{
+			return false;
+		}
+        
+        // Translate table columns
+        $columnsData = $this->getAllColumns('characters');
+        
+        if ($columns == 'all')
+        {
+            $columns = array_keys($columnsData);
+        }
+
+		//empty string
+		$queryColumns = "";
+		
+		//check if we wanna get multiple columns
+		if (is_array($columns))
+		{
+			foreach ($columns as $key)
+			{
+				//check if it's valid key
+				if (isset($columnsData[$key]))
+				{
+					$queryColumns .= "`" . $columnsData[$key] . "` AS " . $key . ", ";
+				}
+			}
+			//check if the query has any valid columns at all
+			if ($queryColumns != "")
+			{
+				//remove the last "," symbol from the query
+				$queryColumns = substr($queryColumns, 0, strlen($queryColumns) - 2);
+			}
+			else
+				return false;
+		}
+		else
+		{
+			//check if the column is valid
+			if (isset($columnsData[$columns]))
+				$queryColumns = "`" . $columnsData[$columns] . "` AS " . $columns;
+			else
+				return false;
+		}
+		
+		$res = $this->DB->prepare("SELECT ". $queryColumns . " FROM `characters` WHERE ".($guid === false ? "`name` = :name" : "`guid` = :guid")." LIMIT 1;");
+		if ($guid !== false)
+		{
+			$res->bindParam(':guid', $guid, PDO::PARAM_INT);
+		}
+		else
+		{
+			$res->bindParam(':name', $name, PDO::PARAM_STR);
+		}
+		$res->execute();
+		
+		$row = $res->fetch(PDO::FETCH_ASSOC);
+		unset($res);
+		
+    	if (!$row)
+		{
+      	  	return false;
+		}
+		
+		//free memory
+		unset($queryColumns);
+		unset($columnsData);
+		  
+        return $row;
+    }
+    
+    public function getCharacterGuild($guid)
+    {
+        $res = $this->DB->prepare(" SELECT `guild`.* 
+                                    FROM `guild_member` 
+                                    LEFT JOIN `guild` ON `guild_member`.`guildid` = `guild`.`guildid` 
+                                    WHERE `guild_member`.`guid` = :guid 
+                                    LIMIT 1;");
+        $res->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res->execute();
+    
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+        return $res->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getStats($guid)
+    {
+        $res = $this->DB->prepare("SELECT * FROM `character_stats` WHERE `guid` = :guid LIMIT 1;");
+        $res->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res->execute();
+    
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+        return $res->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getItems($guid)
+    {
+        $res = $this->DB->prepare(" SELECT `character_inventory`.`slot`, `character_inventory`.`item`, `item_instance`.`itemEntry`, `item_instance`.`enchantments`  
+                                    FROM `character_inventory`, `item_instance` 
+                                    WHERE `character_inventory`.`item` = `item_instance`.`guid` AND `character_inventory`.`slot` >= 0 AND `character_inventory`.`slot` <= 18 AND `character_inventory`.`guid` = :guid AND `character_inventory`.`bag` = 0;");
+        $res->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res->execute();
+
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTalentSpecsInfo($guid)
+    {
+  /*      $res = $this->DB->prepare("SELECT `talentGroupsCount`, `activeTalentGroup` FROM `characters` WHERE `guid` = :guid LIMIT 1;");
+        $res->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res->execute();
+
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+        return $res->fetch(PDO::FETCH_ASSOC);*/
+    }
+
+    public function getTalents($guid, $specId)
+    {
+     /*   $res = $this->DB->prepare("SELECT `spell` FROM `character_talent` WHERE guid = :guid AND (specMask & :spec) = :spec ORDER BY `spell` DESC;");
+        $res->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res->bindParam(':spec', $specId, PDO::PARAM_INT);
+        $res->execute();
+
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+        return $res->fetchAll(PDO::FETCH_ASSOC);*/
+    }
+
+    public function getGlyphs($guid, $specId)
+    {
+     /*   $res = $this->DB->prepare("SELECT * FROM `character_glyphs` WHERE `guid` = :guid AND `talentGroup` = :spec LIMIT 1;");
+        $res->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res->bindParam(':spec', $specId, PDO::PARAM_INT);
+        $res->execute();
+
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+        return $res->fetch(PDO::FETCH_ASSOC);*/
+    }
+
+    public function getProfessions($guid)
+    {
+        //Define the professions (skill ids) we need
+        $professionsString = "164,165,171,182,186,197,202,333,393,755,773,129,185,356,794";
+
+        $res = $this->DB->prepare("SELECT `skill`, `value`, `max` FROM `character_skills` WHERE `guid` = :guid AND `skill` IN(".$professionsString.");");
+        $res->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res->execute();
+
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getRecentAchievements($guid, $limit = 5)
+    {
+        $res = $this->DB->prepare("SELECT `achievement`, `date` FROM `character_achievement` WHERE `guid` = :guid ORDER BY `date` DESC LIMIT :limit;");
+        $res->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $res->execute();
+
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
+     
+	    public function countArenateams($type)
+    {
+        $res = $this->DB->prepare("SELECT COUNT(arenaTeamId) AS arenaTeamId FROM `arena_team` WHERE `type` = :type ;");
+		$res->bindParam(':type', $type, PDO::PARAM_INT);
+        $res->execute();
+
+         if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+		$row = $res->fetch(PDO::FETCH_ASSOC);
+		unset($res);
+
+    	
+      	  return $row['arenaTeamId'];
+    }
+	
+    public function getArenaTeam($guid, $type)
+    {
+        $res = $this->DB->prepare(" SELECT 
+                                        `arena_team_member`.`arenaTeamId` AS `arenateamid`, 
+                                        `arena_team`.`name` AS `teamName`, 
+                                        `arena_team`.`rating` AS `teamRating`, 
+                                        `arena_team`.`rank` AS `teamRank` 
+                                    FROM `arena_team_member`, `arena_team` 
+                                    WHERE `arena_team_member`.`guid` = :guid AND `arena_team`.`arenaTeamId` = `arena_team_member`.`arenaTeamId` AND `arena_team`.`type` = :type 
+                                    LIMIT 1;");
+        $res->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res->bindParam(':type', $type, PDO::PARAM_INT);
+        $res->execute();
+
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+        return $res->fetch(PDO::FETCH_ASSOC);
+    }
+    public function getArenaTeams($type, $limit, $start)
+    {
+        $res = $this->DB->prepare(" SELECT 
+                                        `arenaTeamId` AS `arenateamid`, 
+                                        `arena_team`.`name` AS `teamName`, 
+                                        `arena_team`.`rating` AS `teamRating`, 
+                                        `arena_team`.`rank` AS `teamRank`,
+										`arena_team`.`seasonGames` AS `teamGames`,
+										`arena_team`.`seasonWins` AS `teamWins`
+                                    FROM `arena_team` 
+                                    WHERE  `arena_team`.`type` = :type 
+                                    ORDER BY rating DESC LIMIT :start, :limit ;");
+        $res->bindParam(':type', $type, PDO::PARAM_INT);
+		$res->bindParam(':limit', $limit, PDO::PARAM_INT);
+		$res->bindParam(':start', $start, PDO::PARAM_INT);
+        $res->execute();
+
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getArenaTeamMembers($teamId)
+	{
+		$res = $this->DB->prepare("	SELECT 
+										`arena_team_member`.`guid`, 
+										`arena_team_member`.`personalRating` AS rating,
+										`arena_team_member`.`seasonGames` AS games,
+										`arena_team_member`.`seasonWins` AS wins,
+										`characters`.`name`,
+										`characters`.`class`,
+										`characters`.`race`,
+										`characters`.`level`
+									FROM `arena_team_member` 
+									RIGHT JOIN `characters` ON `characters`.`guid` = `arena_team_member`.`guid` 
+									WHERE `arena_team_member`.`arenateamid` = :teamId ORDER BY guid ASC;");
+        $res->bindParam(':teamId', $teamId, PDO::PARAM_INT);
+        $res->execute();
+
+        if ($res->rowCount() == 0)
+        {
+            return false;
+        }
+		
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public function characterHasItem($guid, $itemID)
+    {		
+		$res = $this->DB->prepare(" SELECT 
+                                        `character_inventory`.`item` AS `item`, 
+                                        `item_instance`.`guid` AS `guid`,
+                                        `item_instance`.`itemEntry` AS `itemEntry`
+                                    FROM `character_inventory`, `item_instance` 
+                                    WHERE `character_inventory`.`guid` = :guid AND `item_instance`.`guid` = `character_inventory`.`item` AND `item_instance`.`itemEntry` = :itemID
+                                    LIMIT 1;");
+        $res->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res->bindParam(':itemID', $itemID, PDO::PARAM_INT);
+        $res->execute();
+
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+		 if ($res->rowCount() > 0)
+		{
+	  		return true;
+        }
+		  
+        return false;
+    }
+	public function itemGuid($itemID)
+    {		
+		$res = $this->DB->prepare("SELECT `guid` FROM `item_instance` WHERE `itemEntry` = :itemID LIMIT 1");
+		$res->bindParam(':itemID', $itemID, PDO::PARAM_INT);
+		$res->execute();
+        
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+		$row = $res->fetch(PDO::FETCH_ASSOC);
+		unset($res);
+
+    	
+      	  return $row['guid'];
+
+    }
+		public function deleteItem($guid, $itemID, $itemGuid)
+    {		
+		$res = $this->DB->prepare(" DELETE `character_inventory`, `item_instance`
+FROM `character_inventory`
+LEFT JOIN `item_instance`
+ON `character_inventory`.`item` = `item_instance`.`guid`
+WHERE `character_inventory`.`guid` = :guid AND `item_instance`.`itemEntry` = :itemID AND `item_instance`.`guid` = :itemGuid ;");         //old method_exists
+     // $res = $this->DB->prepare("DELETE FROM `item_instance` WHERE `owner_guid` = :guid AND `itemEntry` = :itemID LIMIT 1");
+        $res->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res->bindParam(':itemID', $itemID, PDO::PARAM_INT);
+		$res->bindParam(':itemGuid', $itemGuid, PDO::PARAM_INT);
+        $res->execute();  /* 
+		$res1 = $this->DB->prepare("DELETE FROM `character_inventory` WHERE `guid` = :guid AND `item` = :itemGuid LIMIT 1");
+        $res1->bindParam(':guid', $guid, PDO::PARAM_INT);
+        $res1->bindParam(':itemGuid', $itemGuid, PDO::PARAM_INT);
+        $res1->execute();*/
+
+        if ($res->rowCount() == 0 /*AND $res1->rowCount() == 0*/)
+		{
+	  		return false;
+        }
+
+		 if ($res->rowCount() > 0 /*AND $res1->rowCount() > 0*/)
+		{
+	  		return true;
+        }
+		  
+        return false;
+    }
+	
+	public function isCharacterOnline($guid)
+    {		
+		$res = $this->DB->prepare("SELECT `guid`, `online` FROM `characters` WHERE `guid` = :guid LIMIT 1");
+		$res->bindParam(':guid', $guid, PDO::PARAM_INT);
+		$res->execute();
+        
+        if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+
+		$row = $res->fetch(PDO::FETCH_ASSOC);
+		unset($res);
+
+    	if ($row['online'] == '1')
+		{
+      	  return true;
+		}
+		  
+        return false;
+    }
+	
+	public function characterHasMoney($guid, $cost)
+    { 
+		$account = $this->core->user->get('id');
+		
+		$res = $this->DB->prepare("SELECT `guid`, `account`, `money` FROM `characters` WHERE `guid` = :guid AND `account` = :account LIMIT 1");
+		$res->bindParam(':guid', $guid, PDO::PARAM_INT);
+		$res->bindParam(':account', $account, PDO::PARAM_INT);
+		$res->execute();
+		
+		if ($res->rowCount() == 0)
+		{
+	  		return false;
+        }
+        
+        $row = $res->fetch(PDO::FETCH_ASSOC);
+
+		if ($row['money'] < $cost)
+		{
+	  		return false;
+		}
+	 
+        return true;
+    }
+	
+	public function ResolveGuild($guid)
+	{
+		//find out if the char is a guild member
+		$res = $this->DB->prepare("SELECT `guildid`, `guid` FROM `guild_member` WHERE `guid` = :guid LIMIT 1;");
+		$res->bindParam(':guid', $guid, PDO::PARAM_INT);
+		$res->execute();
+		
+		if ($res->rowCount() > 0)
+		{
+			//we are a member of a guild
+			$row = $res->fetch();
+			unset($res);
+			
+			//resolve the guild name
+			$res2 = $this->DB->prepare("SELECT `name` FROM `guild` WHERE `guildid` = :guild LIMIT 1;");
+			$res2->bindParam(':guild', $row['guildid'], PDO::PARAM_INT);
+			$res2->execute();
+			
+			//check if we have found it
+			if ($res2->rowCount() > 0)
+			{
+				//fetch
+				$row2 = $res2->fetch();
+				unset($res2);
+				
+				//return both the name and guildid
+				return array('guildid' => $row['guildid'], 'name' => $row2['name']);
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			//we are not member of any guild
+			return false;
+		}
+		unset($res);
+		
+		return false;
+	}
+	
+	public function Teleport($guid, $coords)
+	{
+		//if the coords are passed in array
+		if (is_array($coords))
+		{
+			$position_x = $coords['position_x'];
+			$position_y = $coords['position_y'];
+			$position_z = $coords['position_z'];
+			$map = $coords['map'];
+		}
+		else
+		{
+			//else passed as string
+			list($position_x, $position_y, $position_z, $map) = explode(',', $coords);
+		}
+				
+		$update_res = $this->DB->prepare("UPDATE `characters` SET position_x = :x, position_y = :y, position_z = :z, map = :map WHERE `guid` = :guid LIMIT 1;");
+		$update_res->bindParam(':guid', $guid, PDO::PARAM_INT);
+		$update_res->bindParam(':x', $position_x, PDO::PARAM_STR);
+		$update_res->bindParam(':y', $position_y, PDO::PARAM_STR);
+		$update_res->bindParam(':z', $position_z, PDO::PARAM_STR);
+		$update_res->bindParam(':map', $map, PDO::PARAM_INT);
+		$update_res->execute();
+		
+		//assume successful update
+		$return = true;
+		
+		//check if the characters as actually updated
+		if ($update_res->rowCount() == 0)
+		{
+			$return = false;
+		}
+		unset($update_res);
+		
+      	return $return; 
+	}
+	
+	//// Use by name prefered, pass guid as false
+	public function Unstuck($guid = false, $name = false)
+	{
+		if ($guid !== false)
+		{
+			//get the player name
+			$res = $this->DB->prepare("SELECT `name` FROM `characters` WHERE `guid` = :guid LIMIT 1;");
+			$res->bindParam(':guid', $guid, PDO::PARAM_INT);
+			$res->execute();
+        
+            if ($res->rowCount() == 0)
+            {
+                return false;
+            }
+
+			$row = $res->fetch(PDO::FETCH_ASSOC);
+            $name = $row['name'];
+            unset($res, $row);
+        }
+        
+        $realm = $this->core->realms->getRealm($this->realmId);
+        $commands = $realm->getCommands();
+
+		//try reviving the character aswell
+        $commands->ExecuteCommand(".revive ".$name);
+         
+ 		/* Old Style
+		$revive_res = $this->DB->prepare("DELETE FROM `character_aura` WHERE `guid` = :guid AND `spell` = :spell");
+		$revive_res->bindParam(':guid', $guid, PDO::PARAM_INT);
+		$revive_res->bindParam(':spell', $this->deathDebuffId, PDO::PARAM_INT);
+		$revive_res->execute();
+		unset($revive_res);
+		*/	
+		
+		//unstuck using the soap teleport command
+		$soap = $commands->ExecuteCommand(".tele name ".$name." \$home");
+
+	    return (isset($soap['sent']) && $soap['sent'] !== false);
+	}
+    
+    /**
+	 * Get the name of a table
+	 * @param String $name
+	 * @return String
+	 */
+	 //// Use by name prefered, pass guid as false
+	public function Buff($guid = false, $name = false)
+	{
+		if ($guid !== false)
+		{
+			//get the player name
+			$res = $this->DB->prepare("SELECT `name` FROM `characters` WHERE `guid` = :guid LIMIT 1;");
+			$res->bindParam(':guid', $guid, PDO::PARAM_INT);
+			$res->execute();
+        
+            if ($res->rowCount() == 0)
+            {
+                return false;
+            }
+ 
+			$row = $res->fetch(PDO::FETCH_ASSOC);
+            $name = $row['name'];
+            unset($res, $row);
+        }
+        
+        $realm = $this->core->realms->getRealm($this->realmId);
+        $commands = $realm->getCommands();
+
+		
+		
+		//unstuck using the soap teleport command
+		$soap = $commands->ExecuteCommand(".boost buff ".$name."");
+
+	    return (isset($soap['sent']) && $soap['sent'] !== false);
+	}
+	public function getTable($name)
+	{
+		if (array_key_exists($name, $this->tables))
+		{
+			return $this->tables[$name];
+		}
+	}
+
+	/**
+	 * Get the name of a column
+	 * @param String $table
+	 * @param String $name
+	 * @return String
+	 */
+	public function getColumn($table, $name)
+	{
+		if (array_key_exists($table, $this->columns) && array_key_exists($name, $this->columns[$table]))
+		{
+			return $this->columns[$table][$name];
+		}
+	}
+
+	/**
+	 * Get a set of all columns
+	 * @param String $name
+	 * @return Array
+	 */
+	public function getAllColumns($table)
+	{
+		if (array_key_exists($table, $this->columns))
+		{
+			return $this->columns[$table];
+		}
+    }
+    
+	public function __destruct()
+	{
+		unset($this->realmId);
+		$this->DB = NULL;
+		unset($this->DB);		
+	}
+}

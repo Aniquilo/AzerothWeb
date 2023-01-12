@@ -1,0 +1,147 @@
+/* RECRUIT A FRIEND 
+	---------------------------------------------------------*/
+.recruit-a-friend .container_3 {
+    padding: 50px 0 0 0;
+    }
+	.recruit-link-holder {
+		width:720px; height:auto;
+		background:#132539;
+		padding:45px 0 55px 0;
+		border-radius:1px;
+		box-shadow:0 0 10px rgba(0,0,0,.15);
+		margin:0 auto 35px auto;
+		}
+		.recruit-link-holder h2 {
+			font-size:11px; 
+            text-align:left; 
+            font-weight: 400;
+			margin:0 0 10px 62px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+            color: #b1c9e5;
+			text-transform:uppercase;
+			}
+			
+	.recruit-link {
+        width:600px;
+        margin: 0 auto;
+		}
+		.recruit-link input {
+            margin: 0;
+            width: 100%;
+            padding-right: 92px;
+			}
+		.recruit-link a {
+			display:block;
+			position:absolute;
+			top:3px; right:4px;
+			}
+			
+		.recruited {
+            width: 650px;
+            margin: 0 auto 0 auto;
+            padding: 0 0 35px 0;
+            }
+
+            .raf-table {
+                display:block;
+                width:100%;
+                }
+                .raf-table .table-title {
+                    display:block;
+                    background:none;
+					border-radius:0;
+					box-shadow:none;
+					height:auto;
+					padding:0 0 18px 0;
+					margin:0 0 12px 0;
+                    }
+                    .raf-table .table-title h2 {
+                        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+                        color: #b1c9e5;
+                        font-size: 16px;
+                        font-weight: 400;
+                        }
+                    .raf-table .table-title::after {
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        bottom: 0px;
+                        left: 0px;
+                        right: 0px;
+                        height: 2px;
+                        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+                        background-color: #192b3f;
+                        }
+                .raf-table .table-header {
+                    display:block;
+					font-size:12px;
+					text-align:left;
+					width:100%; height:25px;
+					background: none;
+					text-shadow:0 1px 0 rgba(0,0,0,.3);
+					box-shadow:none;
+					margin:0;
+					}
+                    .raf-table .table-header > div {
+                        float:left;
+                        margin: 0;
+                        padding:0; 
+                        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+                        color: #4d657f;
+                        font-size: 12px;
+                        font-weight: 400;
+                        }
+                
+                .raf-table ul {}
+                    .raf-table ul li {
+                        font-size:12px;
+                        color: #526173;
+                        text-align:left;
+                        width:100%; height:40px;
+                        background-color: rgba(25,43,63,0.5);
+                        border-radius:1px;
+                        margin:0 0 4px 0;
+                        }
+                        .raf-table ul li > div { 
+                            float:left;
+                            font-size:12px;
+                            font-weight:normal;
+                            margin:0 0 0 2px;
+                            padding:12px 0 0 0;
+                            }
+
+            .active-recruited-members { padding:20px 0 0 0; margin:0 0 40px 0; }
+
+            .active-recruited-members .table-header > div:nth-child(1) { width:224px; }
+            .active-recruited-members ul li > div:nth-child(1) { width:208px; color:#618e30; padding: 12px 0 0 12px; }
+
+            .active-recruited-members .table-header > div:nth-child(2), 
+            .active-recruited-members ul li > div:nth-child(2) { width:170px; text-align: center; }
+
+            .active-recruited-members .table-header > div:nth-child(3), 
+            .active-recruited-members ul li > div:nth-child(3) { width:160px; text-align: center; }
+
+            .active-recruited-members .table-header > div:nth-child(4), 
+            .active-recruited-members ul li > div:nth-child(4) { width:90px; text-align: center; }
+            .active-recruited-members .table-header > div:nth-child(4) { padding: 0 0 0 4px; }
+
+            .pending-ref { margin:0 0 40px 0; }
+
+            .pending-ref .table-header > div:nth-child(1) { width:224px; }
+            .pending-ref ul li > div:nth-child(1) { width:208px; padding: 12px 0 0 12px; }
+
+            .pending-ref .table-header > div:nth-child(2), 
+            .pending-ref ul li > div:nth-child(2) { width:170px; text-align: center; }
+
+            .pending-ref .table-header > div:nth-child(3), 
+            .pending-ref ul li > div:nth-child(3) { width:248px; text-align: center; }	
+				
+        div.referal-pending-info {
+            width:650px;
+            }
+            
+        .raf-no-records {
+            color: #526173;
+            padding: 13px 10px 0 10px !important;
+            text-align: center;
+        }

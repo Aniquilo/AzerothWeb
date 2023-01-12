@@ -1,0 +1,179 @@
+/* ARMOR SETS 
+	---------------------------------------------------------*/
+	.armor-sets {}
+	
+		.armor-sets-page-msg {
+			padding:50px 0 0 0;
+			font-size:14px;
+			text-shadow: 0 1px 1px rgba(4, 8, 13, 0.55);
+            color: #657a90;
+            font-family: Cambria,Georgia,serif;
+            line-height:170%;
+            margin: 0 auto;
+            text-align: center;
+            }
+            .armor-sets-page-msg b,
+            .armor-sets-page-msg strong {
+            color: #9fbad6;
+            }
+	
+	.displayed-armor-sets {
+		width:465px;
+		float:left;
+		margin:24px 0 0 0;
+		}
+	
+		ul.armor-set {
+            width:465px;
+            height:52px;
+			padding:0;
+            overflow:hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid #192b3f;
+            box-sizing: border-box;
+            background-color: #192b3f;
+			transition: height ease-in-out 300ms;
+			}
+			
+			ul.armor-set li.set-head {
+                display:block;
+                height:37px;
+                text-align:left;
+                margin: 0;
+                padding:8px 0 0 12px;
+                }
+                
+			li.set-head div#info {
+				width:280px;
+				height:37px;
+                float:left;
+                padding: 0 0 0 2px;
+				}
+				li.set-head div#info #set-name {
+                    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+                    color: #a5beda;
+                    font-size: 15px;
+                    font-weight: 400;
+                    }
+				li.set-head div#info #set-info {
+                    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+                    color: #62758a;
+                    font-size: 13px;
+                    font-style: italic;
+                    display:block;
+                    padding:2px 0 0 0;
+                    }
+				
+				li.set-head div#price {
+                    width:122px; height:34px;
+                    float:left;
+                    padding:3px 0 0 0;
+                    }
+                    li.set-head div#price::after {
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        top: -2px;
+                        right: 0px;
+                        width: 2px;
+                        height: 41px;
+                        background-color: #08111b;
+                        opacity: 0.5;
+                        }
+				li.set-head div#price p {
+					display:block;
+                    float:left;
+                    width: 40px;
+                    text-align: right;
+                    text-shadow: 0 2px 1px rgba(0, 0, 0, 0.3);
+                    color: #f2b54c;
+                    font-size: 24px;
+                    font-weight: 400;
+					}
+					li.set-head div#price span {
+                        display:block;
+                        float:left;
+                        width:58px;
+                        padding:8px 0 0 8px;
+                        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+                        color: #405771;
+                        font-size: 13px;
+                        font-style: italic;
+                        }
+                    
+				li.set-head div#arrow {
+                    display:block;
+                    width: 28px;height: 18px;
+                    background-image:url("images/misc/misc_main.png");
+                    background-repeat: no-repeat;
+                    background-position: -620px -41px;
+                    float:right;
+                    margin:9px 11px 0 0;
+                    }
+				
+		/* IF active */
+		ul.armor-set-active {
+            height:111px;
+            border: 1px solid #6dbcff;
+            box-sizing: border-box;
+            background-color: #1c3046;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04), 0 0 10px rgba(0, 0, 0, 0.15), 0 0 35px rgba(59, 161, 255, 0.25), inset 0 0 7px rgba(44, 142, 241, 0.07);
+			}
+			ul.armor-set-active li.set-head div#arrow {
+                background-position: -648px -41px;
+                }
+		
+		ul.armor-set li.armor-set-items {
+			margin:7px auto 0 auto;
+            border-radius:1px;
+            width: 440px;
+            height: 0px;
+            background-color: rgba(0,0,0,.15);
+			transition: height ease-in-out 300ms;
+			overflow:hidden;
+			}
+			
+		/* Armor set items if the container is active */
+		ul.armor-set-active li.armor-set-items {
+			width:440px; height: 48px;
+			}
+			
+			li.armor-set-items a {
+				display:block;
+				width:24px; height:24px;
+				float:left;
+				margin:11px 0 0 11px;
+				border-radius:2px;
+				background-size:100%;
+				border: solid 1px #999;
+				box-shadow:inset 0 0 10px 2px #000, 0 0 6px #000, inset 0 0 0 1px #000;
+				}
+		/* HOVER */
+		ul.armor-set:hover {
+			height:111px;
+			}
+			
+			ul.armor-set:hover li.armor-set-items {
+			height:48px;
+			}
+			ul.armor-set:hover li.set-head div#arrow {
+                background-position: -648px -41px;
+            }
+        
+        .pagination-container { margin: 24px 0 0 0; }
+		    .pagination-container .pagination { padding: 15px; }
+		
+		.armor-set-prepurchase-info {
+			width:345px;
+			float:right;
+			margin:10px 0 0 0;
+			text-shadow: 0 1px 1px rgba(4, 8, 13, 0.55);
+            color: #657a90;
+			}
+            .armor-set-prepurchase-info b { font-size:13px; color:#9fbad6;}
+            
+    .armor-sets .noresults {
+        text-align: center;
+        font-size: 16px;
+        padding: 40px 0 40px 0;
+    }

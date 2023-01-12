@@ -1,0 +1,39 @@
+.purchase-gold form {
+    padding:20px 0 20px 0;
+    text-align: center;
+}
+
+.purchase-gold .character-section {
+    display:inline-block;
+    vertical-align:top;
+    margin: 3px 15px 0 0;
+}
+
+.purchase-gold .gold-section {
+    display:inline-block; 
+    vertical-align: top;
+    margin: 4px 15px 0 0;
+    }
+    .purchase-gold .gold-section input {
+        width: 324px;
+        height: 50px;
+    }
+    .purchase-gold .gold-section .price {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        color: #6c6c6c;
+        line-height: 50px;
+        text-align: right;
+        width: 302px;
+        height: 50px;
+        pointer-events: none;
+        }
+        .purchase-gold .gold-section .price p {
+            color: #d0a157;
+            font-size: 16px;
+        }
+        
+    .purchase-gold input[type="submit"] {
+        margin: 2px 0 0 0;
+    }

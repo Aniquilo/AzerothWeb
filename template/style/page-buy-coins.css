@@ -1,0 +1,69 @@
+/* Buy Coins */
+.buy-coins {
+    text-align: center;
+    }
+	
+	ul.payment_methods {
+		padding:70px 0 40px 0;
+		}
+		
+		ul.payment_methods li {
+			display:inline-block;
+			vertical-align:top;
+			margin:0 17px;
+			font-size:26px;
+			color:#090807;
+			text-shadow:0 1px 1px rgba(255,255,255,.04);
+			padding:28px 0 0 0;
+			}
+			ul.payment_methods li a {
+				display:block;
+				width: auto; height: 132px;
+                background-color: #132539;
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+				border-radius:1px;
+				}
+				ul.payment_methods li a img {
+					margin:26px 0 0 0;
+                    }
+            ul.payment_methods li#stripe a {
+                padding: 0 20px;
+                }
+                ul.payment_methods li#stripe a img {
+                    margin: 0;
+                    height: 130px;
+                }
+					
+            ul.payment_methods li#paypal, 
+            ul.payment_methods li#stripe, 
+            ul.payment_methods li#paymentwall { 
+                margin:0;
+                padding:0; 
+                }
+			
+                ul.payment_methods li#paypal a { width: 310px; }
+                ul.payment_methods li#stripe,
+                ul.payment_methods li#paymentwall { margin-left: 20px; }
+				ul.payment_methods li#paymentwall a { width:365px; }
+                ul.payment_methods li#paymentwall a img { margin:48px 0 0 0; }
+                
+			ul.payment_methods li a:hover {
+                background-color: #15293f;
+                box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 0 15px rgba(0, 0, 0, 0.1);
+                }
+
+	.buy-coins p {
+		display:block;
+        width:700px;
+        margin: 0 auto;
+        padding:20px 0 60px 0;
+        color: #516274;
+        font-family: Cambria,Georgia,serif;
+        font-size: 15px;
+        font-style: italic;
+        line-height: 24px;
+		}
+		
+		.buy-coins p a { color:#9db2c9;}
+		.buy-coins p a:hover { color:#cee3f8;}
+
